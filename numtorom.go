@@ -9,6 +9,7 @@ import (
   "errors"
 )
 
+//dictionary of basic roman numerals
 var roman = map[int]string {
   1000: "M",
   500: "D",
@@ -19,6 +20,7 @@ var roman = map[int]string {
   1: "I",
 }
 
+//array of look-up values
 var maxi = []int{
 	1000,
 	500,
@@ -29,22 +31,22 @@ var maxi = []int{
 	1,
 }
 
-
+//handles terminal input and checks if the value is in a certain range
 func main() {
   readi := bufio.NewReader(os.Stdin)
   fmt.Println("Enter number: ")
-
   line, _ := readi.ReadString('\n')
-  line =strings.TrimSuffix(line, "\n")
+  line = strings.TrimSuffix(line, "\r\n")
 
-  num, _ := strconv.Atoi(line)
-  if num <= 0 || num > 3000{
+  var num, _ = strconv.Atoi(line)
+  if num <= 0 || num > 3999{
     fmt.Println(errors.New("can't return roman numeral"))
   } else {
     fmt.Println(goToRome(num))
   }
 }
 
+//converts arabic number to roman
 func goToRome(num int) string {
   ret := ""
 
@@ -54,16 +56,17 @@ func goToRome(num int) string {
     num -= val
   }
 
-  ret = strings.ReplaceAll(ret, "IIII", "IV")
-  ret = strings.ReplaceAll(ret, "VIIII", "IX")
-  ret = strings.ReplaceAll(ret, "XXXX", "XL")
-  ret = strings.ReplaceAll(ret, "LXXXX", "XC")
-  ret = strings.ReplaceAll(ret, "CCCC", "CD")
   ret = strings.ReplaceAll(ret, "DCCCC", "CM")
+  ret = strings.ReplaceAll(ret, "CCCC", "CD")
+  ret = strings.ReplaceAll(ret, "LXXXX", "XC")
+  ret = strings.ReplaceAll(ret, "XXXX", "XL")
+  ret = strings.ReplaceAll(ret, "VIIII", "IX")
+  ret = strings.ReplaceAll(ret, "IIII", "IV")
 
   return ret
 }
 
+//finds the highest decimal value
 func hiVal(num int) int {
   for _ , val := range maxi {
     if num >= val{
