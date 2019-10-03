@@ -10,7 +10,7 @@ import (
 )
 
 //dictionary of basic roman numerals
-var roman = map[int]string {
+var roman = map[int]string{
 	1000: "M",
 	500:  "D",
 	100:  "C",
@@ -21,7 +21,7 @@ var roman = map[int]string {
 }
 
 //array of look-up values
-var maxi = []int {
+var maxi = []int{
 	1000,
 	500,
 	100,
@@ -39,16 +39,16 @@ func main() {
 	line = strings.TrimSuffix(line, "\r\n")
 
 	var num, _ = strconv.Atoi(line)
-	if num <= 0 || num > 3999 {
-		fmt.Println(errors.New("can't return roman numeral"))
-	} else {
-		fmt.Println(goToRome(num))
-	}
+	fmt.Println(goToRome(num))
 }
 
 //converts arabic number to roman
-func goToRome(num int) string {
+func goToRome(num int) (string, error) {
 	ret := ""
+
+	if num <= 0 || num > 3999 {
+		return "", errors.New("can't return roman numeral")
+	}
 
 	for num > 0 {
 		val := hiVal(num)
@@ -63,7 +63,7 @@ func goToRome(num int) string {
 	ret = strings.ReplaceAll(ret, "VIIII", "IX")
 	ret = strings.ReplaceAll(ret, "IIII", "IV")
 
-	return ret
+	return ret, nil
 }
 
 //finds the highest decimal value
